@@ -14,19 +14,20 @@ Sudoku::Sudoku(std::string file)
         ss << inFile.rdbuf();
         data = ss.str();
         inFile.close();
+
+        int charIndex = 0;
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                int cellData = data[charIndex] - '0';
+                sudoku[i][j] = new GridCell(cellData, cellData == 0);
+                charIndex++;
+            }
+        }
     }
     else {
         std::cerr << "Failed to open file for reading.\n";
     }
 
-    int charIndex = 0;
-    for (int i = 0; i < 9; i++) {
-        for (int j = 0; j < 9; j++) {
-            int cellData = data[charIndex] - '0';
-            sudoku[i][j] = new GridCell(cellData, cellData == 0);
-            charIndex++;
-        }
-    }
 }
 
 Sudoku::~Sudoku()
