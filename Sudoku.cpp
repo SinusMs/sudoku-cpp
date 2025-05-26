@@ -126,5 +126,31 @@ bool Sudoku::ValidateCell(int i, int j)
 
 void Sudoku::Solution()
 {
+    if (SolutionRec()) {
+        std::cout << "\033[32m" << "Solved the Sudoku!" << "\033[0m" << std::endl;
+    }
+    else {
+        std::cout << "\033[31m" << "No Solution Found! Note that values entered by the user are not overwritten by the algorithm and therefore might make the sudoku unsolvable." << "\033[0m" << std::endl;
+    }
+}
 
+bool Sudoku::SolutionRec()
+{
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 9; j++) {
+            if (sudoku[i][j]->value == 0) {
+                for (int n = 1; n <= 9; n++) 
+                {
+                    sudoku[i][j]->value = n;
+                    if (ValidateCell(i, j)) {
+                        if (SolutionRec())
+                            return true;
+                    }
+                    sudoku[i][j]->value = 0;
+                }
+                return false;
+            }
+        }
+    }
+    return true;
 }

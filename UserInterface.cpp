@@ -115,7 +115,7 @@ void UserInterface::Help()
 	std::cout << "validate" << std::endl;
 	std::cout << "\tvalidate your solution" << std::endl;
 	std::cout << "solution" << std::endl;
-	std::cout << "\tautomativally solve the sudoku" << std::endl;
+	std::cout << "\tautomatically solve the sudoku" << std::endl;
 	std::cout << "help" << std::endl;
 	std::cout << "\tdisplay this help message" << std::endl;
 	std::cout << "exit" << std::endl;

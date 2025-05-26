@@ -17,5 +17,6 @@ public:
 	void Validate();
 	bool ValidateCell(int i, int j);
 	void Solution();
+	bool SolutionRec();
 };
 
