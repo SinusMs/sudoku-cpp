@@ -88,7 +88,7 @@ void Sudoku::Validate()
     for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 9; j++) {
             if (!ValidateCell(i, j)) {
-                std::cout << "\033[31m" << "Sudoku invalid! Invalid cell found at i=" << i + 1 << " j=" << j + 1 << " with value " << sudoku[i][j]->value << "\033[0m" << std::endl;
+                std::cout << "\033[31m" << "Sudoku invalid! Conflicting cell found at i=" << i + 1 << " j=" << j + 1 << " with value " << sudoku[i][j]->value << "\033[0m" << std::endl;
                 return;
             }
         }
