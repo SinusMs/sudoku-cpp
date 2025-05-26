@@ -11,11 +11,9 @@ Sudoku::Sudoku(std::string file)
 
     if (inFile.is_open()) {
         std::ostringstream ss;
-        ss << inFile.rdbuf();  // Read entire file into stringstream
+        ss << inFile.rdbuf();
         data = ss.str();
         inFile.close();
-
-        std::cout << "Data loaded:\n" << data << "\n";
     }
     else {
         std::cerr << "Failed to open file for reading.\n";

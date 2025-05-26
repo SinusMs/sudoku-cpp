@@ -17,6 +17,8 @@ int UserInterface::Loop()
 	ListFiles();
 
 	while (true) {
+		if (sudoku != nullptr)
+			sudoku->Print();
 		std::vector<std::string> input = GetInput();
 		
 		if (input.size() == 0) {
@@ -27,13 +29,29 @@ int UserInterface::Loop()
 		}
 		else if (input.at(0) == "load" && input.size() == 2) {
 			sudoku = new Sudoku("./sudokus/" + input.at(1));
-			GameLoop();
 		}
 		else if (input.at(0) == "help") {
 			Help();
 		}
 		else if (input.at(0) == "exit") {
 			return 0;
+		}
+		else if (sudoku != nullptr) {
+			if (isValidCellInput(input.at(0))) {
+				sudoku->SetCell(input.at(0)[0] - '1', input.at(0)[1] - '1', input.at(0)[2] - '0');
+			}
+			else if (input.at(0) == "undo") {
+				sudoku->Undo();
+			}
+			else if (input.at(0) == "validate") {
+				sudoku->Validate();
+			}
+			else if (input.at(0) == "solution") {
+				sudoku->Solution();
+			}
+			else {
+				std::cout << "Invalid Input! Type \"help\" for help." << std::endl;
+			}
 		}
 		else {
 			std::cout << "Invalid Input! Type \"help\" for help." << std::endl;
@@ -41,37 +59,6 @@ int UserInterface::Loop()
 	}
 }
 
-int UserInterface::GameLoop()
-{
-	while (true) {
-		sudoku->Print();
-		std::vector<std::string> input = GetInput();
-		if (input.size() == 0) {
-			std::cout << "Invalid Input! Type \"help\" for help." << std::endl;
-		}
-		else if (isValidCellInput(input.at(0))) {
-			sudoku->SetCell(input.at(0)[0] - '1', input.at(0)[1] - '1', input.at(0)[2] - '0');
-		}
-		else if (input.at(0) == "undo") {
-			sudoku->Undo();
-		}
-		else if (input.at(0) == "validate") {
-			sudoku->Validate();
-		}
-		else if (input.at(0) == "solution") {
-			sudoku->Solution();
-		}
-		else if (input.at(0) == "help") {
-			Help();
-		}
-		else if (input.at(0) == "exit") {
-			return 0;
-		}
-		else {
-			std::cout << "Invalid Input! Type \"help\" for help." << std::endl;
-		}
-	}
-}
 
 std::vector<std::string> UserInterface::GetInput()
 {
@@ -97,17 +84,11 @@ bool UserInterface::isValidCellInput(const std::string& s) {
 void UserInterface::Help()
 {
 	std::cout << std::endl;
-	std::cout << "\033[33m" << "MAIN MENU COMMANDS:" << "\033[0m" << std::endl;
+	std::cout << "\033[33m" << "AVAILABLE COMMANDS:" << "\033[0m" << std::endl;
 	std::cout << "files" << std::endl;
 	std::cout << "\tlist all available sudoku files" << std::endl;
 	std::cout << "load <filename>" << std::endl;
 	std::cout << "\tload the sudoku puzzle" << std::endl;
-	std::cout << "help" << std::endl;
-	std::cout << "\tdisplay this help message" << std::endl;
-	std::cout << "exit" << std::endl;
-	std::cout << "\texit the application" << std::endl << std::endl;
-
-	std::cout << "\033[33m" << "SUDOKU PUZZLE COMMANDS:" << "\033[0m" << std::endl;
 	std::cout << "<row><column><value>" << std::endl;
 	std::cout << "\texample: to write a 7 in the middle of the field, type \"557\"" << std::endl;
 	std::cout << "undo" << std::endl;
@@ -119,7 +100,7 @@ void UserInterface::Help()
 	std::cout << "help" << std::endl;
 	std::cout << "\tdisplay this help message" << std::endl;
 	std::cout << "exit" << std::endl;
-	std::cout << "\texit the sudoku and return to main menu" << std::endl << std::endl;
+	std::cout << "\texit the application" << std::endl << std::endl;
 }
 
 void UserInterface::ListFiles()

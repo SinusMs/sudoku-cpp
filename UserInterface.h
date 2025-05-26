@@ -9,7 +9,6 @@ public:
 	~UserInterface();
 	int Loop();
 private:
-	int GameLoop();
 	std::vector<std::string> GetInput();
 	bool isValidCellInput(const std::string& s);
 	void Help();
