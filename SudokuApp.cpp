@@ -7,8 +7,6 @@
 
 int main()
 {
-    std::cout << "Sudoku\n";
-
     UserInterface userInterface = UserInterface();
     userInterface.Loop();
 }

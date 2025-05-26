@@ -15,7 +15,7 @@ public:
 	Sudoku(std::string file);
 	~Sudoku();
 	void Print();
-	bool SetCell(int i, int j, int value);
+	void SetCell(int i, int j, int value);
 	void Undo();
 	void Validate();
 	void Solution();

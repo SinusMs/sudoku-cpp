@@ -31,7 +31,7 @@ Sudoku::Sudoku(std::string file)
 
 Sudoku::~Sudoku()
 {
-    // free any memory that might have been manually allocated on the heap
+    // free any memory that has been manually allocated on the heap
     for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 9; j++) {
             if (sudoku[i][j] != nullptr)
@@ -68,12 +68,10 @@ void Sudoku::Print()
     std::cout << std::endl;
 }
 
-bool Sudoku::SetCell(int i, int j, int value)
+void Sudoku::SetCell(int i, int j, int value)
 {
-    if (!sudoku[i][j]->editable)
-        return false;
-
-    undo.PushAndDo(*sudoku[i][j], value);
+    if (sudoku[i][j]->editable)
+        undo.PushAndDo(*sudoku[i][j], value);
 }
 
 void Sudoku::Undo()
