@@ -15,6 +15,7 @@ public:
 	bool SetCell(int i, int j, int value);
 	void Undo();
 	void Validate();
+	bool ValidateCell(int i, int j);
 	void Solution();
 };
 

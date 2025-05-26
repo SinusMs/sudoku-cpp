@@ -108,7 +108,7 @@ void UserInterface::Help()
 	std::cout << "\texit the application" << std::endl << std::endl;
 
 	std::cout << "\033[33m" << "SUDOKU PUZZLE COMMANDS:" << "\033[0m" << std::endl;
-	std::cout << "<i><j><value>" << std::endl;
+	std::cout << "<row><column><value>" << std::endl;
 	std::cout << "\texample: to write a 7 in the middle of the field, type \"557\"" << std::endl;
 	std::cout << "undo" << std::endl;
 	std::cout << "\tundo the last move" << std::endl;
