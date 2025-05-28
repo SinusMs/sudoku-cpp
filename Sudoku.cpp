@@ -3,31 +3,35 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <filesystem>
 
 Sudoku::Sudoku(std::string file)
 {
-    std::ifstream inFile(file);
+    if (!std::filesystem::exists(file))
+        throw std::runtime_error("Sudoku at path \"" + file + "\" not found!");
+    std::ifstream inFile;
     std::string data;
+    std::ostringstream ss;
 
-    if (inFile.is_open()) {
-        std::ostringstream ss;
-        ss << inFile.rdbuf();
-        data = ss.str();
-        inFile.close();
+    inFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+    inFile.open(file);
 
-        int charIndex = 0;
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                int cellData = data[charIndex] - '0';
-                sudoku[i][j] = new GridCell(cellData, cellData == 0);
-                charIndex++;
-            }
+    ss << inFile.rdbuf();
+    data = ss.str();
+    if (data.length() != 81)
+        throw std::runtime_error("Sudoku file \"" + file + "\" has invalid length! (needs to be 81 characters)");
+    inFile.close();
+
+    int charIndex = 0;
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 9; j++) {
+            if (data[charIndex] < '0' || data[charIndex] > '9')
+                throw std::runtime_error("Sudoku file \"" + file + "\" contains invalid character \"" + data[charIndex] + "\"!");
+            int cellData = data[charIndex] - '0';
+            sudoku[i][j] = new GridCell(cellData, cellData == 0);
+            charIndex++;
         }
     }
-    else {
-        std::cerr << "Failed to open file for reading.\n";
-    }
-
 }
 
 Sudoku::~Sudoku()
@@ -71,8 +75,9 @@ void Sudoku::Print()
 
 void Sudoku::SetCell(int i, int j, int value)
 {
-    if (sudoku[i][j]->editable)
-        undo.PushAndDo(*sudoku[i][j], value);
+    if (!sudoku[i][j]->editable)
+        throw std::runtime_error("Cell " + std::to_string(i) + " " + std::to_string(j) + " is not editable!");
+    undo.PushAndDo(*sudoku[i][j], value);
 }
 
 void Sudoku::Undo()

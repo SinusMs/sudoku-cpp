@@ -9,6 +9,11 @@ public:
 	~UserInterface();
 	int Loop();
 private:
+	void PrintException(const std::exception& e);
+	void TryPrintSudoku();
+	void PrintInvalidInput();
+	void PrintTitle();
+	bool SudokuPresent();
 	std::vector<std::string> GetInput();
 	bool isValidCellInput(const std::string& s);
 	void Help();
