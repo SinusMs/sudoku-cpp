@@ -28,6 +28,8 @@ int UserInterface::Loop()
 			ListFiles();
 		}
 		else if (input.at(0) == "load" && input.size() == 2) {
+			if (sudoku != nullptr)
+				delete sudoku;
 			sudoku = new Sudoku("./sudokus/" + input.at(1));
 		}
 		else if (input.at(0) == "help") {
