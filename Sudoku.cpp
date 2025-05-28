@@ -76,7 +76,7 @@ void Sudoku::Print()
 void Sudoku::SetCell(int i, int j, int value)
 {
     if (!sudoku[i][j]->editable)
-        throw std::runtime_error("Cell " + std::to_string(i) + " " + std::to_string(j) + " is not editable!");
+        throw std::runtime_error("Cell " + std::to_string(i + 1) + " " + std::to_string(j + 1) + " is not editable!");
     undo.PushAndDo(*sudoku[i][j], value);
 }
 
