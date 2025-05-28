@@ -2,11 +2,19 @@
 //
 
 #include <iostream>
+#include <Windows.h>
 #include "UserInterface.h"
 
 
 int main()
 {
+    // enable coloring using ansi codes in older windows terminal
+    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    DWORD dwMode = 0;
+    GetConsoleMode(hOut, &dwMode);
+    dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+    SetConsoleMode(hOut, dwMode);
+
     UserInterface userInterface = UserInterface();
     userInterface.Loop();
 }
